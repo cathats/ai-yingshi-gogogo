@@ -9,6 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: DOCKER_USERNAME
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/ai-yingshi-gogogo
+
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/ai-yingshi-gogogo
+          images: ${{ env.IMAGE_REPO }}
           tags: |
             type=raw,value=latest
             type=sha
